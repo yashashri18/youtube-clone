@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {closeMenu} from '../utils/MenuToggleSlice'
-
+import CommentsContainer from './CommentsContainer'
 const WatchPage = () => {
   const dispatch = useDispatch();
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,7 +11,10 @@ const WatchPage = () => {
     dispatch(closeMenu())
   },[])
 
+
+
   return (
+    <div className='flex flex-col'>
     <div className='p-6'>
       <iframe 
       width="1000" 
@@ -21,6 +24,8 @@ const WatchPage = () => {
       frameBorder="0" 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
       allowFullScreen></iframe>
+    </div>
+    <CommentsContainer/>
     </div>
   )
 }

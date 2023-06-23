@@ -13,8 +13,6 @@ const Header = () => {
   const [suggestions, setSuggestions] = useState('')
   
   useEffect(()=>{
-    console.log("inside useeffect")
-
     const timer = setTimeout(()=>{
       //if it is in cache -> setsuggestions from cache
       //else - make api call
@@ -40,9 +38,8 @@ const Header = () => {
   }
  
   const handleToggleMenu = () => {
-    console.log("need to dispatch an action here")
+    //dispatch an anction 
     dispatch(toggleMenu())
-    
   }
 
   return (
