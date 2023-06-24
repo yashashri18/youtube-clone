@@ -29,6 +29,11 @@ const Header = () => {
     
   },[searchQuery])
 
+  const HandleSuggestionClick = (keyword) => {
+    console.log('clicked on search suggestion = '+keyword)
+
+  }
+
   const getSearchSuggestion = async () => {
     const data = await fetch(YOUTUBE_SEARCH_SUGGESTIONS_API+searchQuery)
     const json = await data.json();
@@ -73,7 +78,7 @@ const Header = () => {
           <ul>
             {
               suggestions && suggestions.map((suggestion)=>{
-                return <li key={suggestion} className='border-b p-2 text-left	'><SearchIcon/>{suggestion}</li>
+                return <li key={suggestion}  className='border-b p-2 text-left	'><SearchIcon/>{suggestion}</li>
               })
             }
             {/* <li className='border-b p-2 text-left	'><SearchIcon/>Iphone</li>

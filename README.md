@@ -1,6 +1,6 @@
 This Youtube Clone is created using React JS Library. It is built using amazing React Features , it Includes
 
-🚀 Optimized Search using Debouncing and caching
+🚀 Optimized Search Suggestions using Debouncing and caching
 
 🚀 Nested N-level comments
 

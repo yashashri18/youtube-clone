@@ -6,6 +6,8 @@ export const YOUTUBE_FETCH_API = "https://youtube.googleapis.com/youtube/v3/vide
 
 export const YOUTUBE_SEARCH_SUGGESTIONS_API = "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";
 
+export const MAX_MSG_COUNT = 15 ;
+
 export const commentsData = [
     {
         name: "Yashashri Bongulwar",
