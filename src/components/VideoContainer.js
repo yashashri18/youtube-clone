@@ -11,10 +11,10 @@ const VideoContainer = () => {
 
   if(videos.length === 0) return <Shimmer/>
   return (
-    <div className='flex gap-3 p-10 flex-wrap'>
+    <div className='flex gap-3 p-10 flex-wrap sm:justify-between justify-center'>
       {
         videos.map((video)=>{
-          return <Link to={'/watch?v='+video.id} key={video.id}><VideoCard  info={video}/></Link>
+          return <Link to={'/watch?v='+video.id} key={video.etag}><VideoCard  info={video}/></Link>
         })
       }
     </div>

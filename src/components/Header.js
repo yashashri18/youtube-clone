@@ -4,6 +4,9 @@ import {toggleMenu} from '../utils/MenuToggleSlice'
 import {YOUTUBE_SEARCH_SUGGESTIONS_API} from '../utils/constants'
 import SearchIcon from './SearchIcon'
 import {addResults} from '../utils/SearchSuggestions'
+import {YOUTUBE_KEYWORD_SEARCH_API} from '../utils/constants'
+import {YOUTUBE_API_KEY} from '../utils/constants'
+import {updateVideos} from '../utils/VideosSlice'
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -29,9 +32,13 @@ const Header = () => {
     
   },[searchQuery])
 
-  const HandleSuggestionClick = (keyword) => {
-    console.log('clicked on search suggestion = '+keyword)
-
+  const handleSuggestionClick = async (suggestion) => {
+    const data = await fetch(YOUTUBE_KEYWORD_SEARCH_API+suggestion+"&key="+YOUTUBE_API_KEY);
+    const json = await data.json();
+    dispatch(updateVideos(json.items))
+    setSuggestions('')
+    setSearchQuery('')
+    console.log('api call - fetch videos as per suggestion')
   }
 
   const getSearchSuggestion = async () => {
@@ -40,6 +47,7 @@ const Header = () => {
     setSuggestions(json[1]);
     //dispatch action which adds cache with suggestions
     dispatch(addResults({[searchQuery]:json[1]}))
+    console.log('api call - fetch suggestion')
   }
  
   const handleToggleMenu = () => {
@@ -48,8 +56,8 @@ const Header = () => {
   }
 
   return (
-    <div className='flex items-center shadow-sm' >
-      <div className='flex items-center w-[25%]'>
+    <div className='flex items-center shadow-sm py-3 sm:py-0' >
+      <div className='hidden	 sm:flex items-center w-[25%] pl-12'>
         <img 
             onClick={()=>handleToggleMenu()}
             className='w-6 h-6'
@@ -63,34 +71,31 @@ const Header = () => {
         />
         
       </div>
-      <div className='w-[50%] text-center relative'>
+      <div className='w-[80%] sm:w-[50%] text-center relative m-auto'>
         <div>
         <input 
             type="text"
-            className='w-1/2 p-2 border border-gray-500 rounded-l-full w-[90%]'
+            className='w-1/2 p-2 border border-gray-500 rounded-l-full md:w-[80%] w-[75%] sm:w-[90%] lg:w-[90%]'
             value={searchQuery}
             onChange={(e)=>setSearchQuery(e.target.value)}
+            onKeyDown={(e)=>{ (e.key === 'Enter') &&  handleSuggestionClick(searchQuery)
+            }}
         ></input>
-        <button className='p-2 border border-gray-500 rounded-r-full w-[10%]'>Search</button>
+        <button onClick={()=>{handleSuggestionClick(searchQuery)}}  className='p-2 border border-gray-500 rounded-r-full sm:w-[10%] lg:w-[10%] md:w-[20%] w-[25%]'>Search</button>
         </div>
         {/* search results div  */}
         <div className='absolute left-0 right-0 m-auto bg-white shadow-lg rounded-lg'>
           <ul>
             {
               suggestions && suggestions.map((suggestion)=>{
-                return <li key={suggestion}  className='border-b p-2 text-left	'><SearchIcon/>{suggestion}</li>
+                return <li key={suggestion} onClick={()=>{handleSuggestionClick(suggestion)}}  className='border-b p-2 text-left	'><SearchIcon/>{suggestion}</li>
               })
             }
-            {/* <li className='border-b p-2 text-left	'><SearchIcon/>Iphone</li>
-            <li className='border-b p-2 text-left	'><SearchIcon/>Iphone 13</li>
-            <li className='border-b p-2 text-left	'><SearchIcon/>Iphone</li>
-            <li className='border-b p-2 text-left	'><SearchIcon/>Iphone 13</li>
-            <li className='border-b p-2 text-left	'><SearchIcon/>Iphone</li>
-            <li className='border-b p-2 text-left	'><SearchIcon/>Iphone 13</li> */}
+           
           </ul>
         </div>
       </div>
-      <div className=' w-[20%]'>
+      <div className=' w-[20%] hidden	 sm:block pr-12'>
         <img
             alt="user_iocn"
             className='w-8 h-8 ml-auto'

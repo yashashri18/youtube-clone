@@ -14,6 +14,7 @@ const useGetVideos = () => {
         const data = await fetch(YOUTUBE_FETCH_API)
         const json = await data.json();
         dispatch(updateVideos(json.items))
+        console.log('fetch api - popular videos at the start')
     }
     return videos1
 }

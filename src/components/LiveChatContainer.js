@@ -14,7 +14,7 @@ const LiveChatContainer = () => {
         const interval = setInterval(()=>{
             const msgobj = {
                 name:userNameGenerator(),
-                message :userCommentGenerator(20)
+                message :userCommentGenerator(15)
             }
             dispatch(addMessage(msgobj))
         },1500)
